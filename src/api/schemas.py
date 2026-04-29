@@ -10,7 +10,7 @@ class TranscribeResponse(BaseModel):
 class TranscribeRequest(BaseModel):
     """转录请求模型"""
 
-    session_id: str = "default"
+    role: str = "default"
     llm_provider: str = "longcat"
 
 

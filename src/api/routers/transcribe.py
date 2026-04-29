@@ -13,7 +13,7 @@ router = APIRouter(prefix="/api/v1", tags=["转录"])
 @router.post("/transcribe", response_model=TranscribeResponse)
 async def transcribe(
     file: UploadFile = File(...),
-    session_id: str = "transcribe_default",
+    role: str = "default",
     llm_provider: str = "longcat",
 ) -> TranscribeResponse:
     """接收音频文件并返回格式化后的歌词"""
@@ -27,12 +27,15 @@ async def transcribe(
     # 2. 使用 Agent 格式化歌词
     agent_manager = AgentManager()
     agent = agent_manager.get_agent(
-        session_id=session_id,
+        role=role,
         llm_provider=llm_provider,
     )
 
     result = agent.invoke(
         {"messages": [{"role": "user", "content": raw_lyrics}]},
+        context = {
+            "api_role": "transcribe"
+        }
     )
 
     # 3. 提取格式化后的歌词
@@ -47,5 +50,5 @@ async def transcribe(
     else:
         formatted_lyrics = raw_lyrics
 
-    console_logger.info(f"歌词格式化完成，session_id: {session_id}")
+    console_logger.info(f"歌词格式化完成，agent: {role}")
     return TranscribeResponse(lyrics=formatted_lyrics)

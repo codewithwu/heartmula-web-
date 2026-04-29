@@ -5,19 +5,20 @@ from typing import Annotated, Any
 
 from langchain.agents import create_agent
 
+from src.agents.context import AgentContext
 from src.agents.llm_factory import get_llm
-from src.agents.prompts import LYRICS_FORMATTING_PROMPT
+from src.agents.middleware import get_all_middleware
 from src.utils import console_logger
 
 
 class AgentManager:
     """Agent 多例管理器（单例）.
 
-    相同 session_id 复用同一 agent 实例，避免重复创建。
+    相同 role 复用同一 agent 实例，避免重复创建。
     """
 
     _instance: "AgentManager | None" = None
-    _agents: dict[str, Any] = {}  # session_id → agent
+    _agents: dict[str, Any] = {}  # role → agent
 
     def __new__(cls) -> "AgentManager":
         if cls._instance is None:
@@ -27,53 +28,54 @@ class AgentManager:
 
     def get_agent(
         self,
-        session_id: Annotated[str, "会话 ID"],
+        role: Annotated[str, "角色标识"] = "default",
         llm_provider: Annotated[str, "LLM 提供者: 'longcat' 或 'ling'"] = "longcat",
     ) -> Any:
         """获取或创建 agent 实例.
 
         Args:
-            session_id: 会话 ID，相同 session_id 返回同一 agent 实例
+            role: 角色标识，相同 role 返回同一 agent 实例
             llm_provider: LLM 提供者
 
         Returns:
-            RAG Agent 实例（带记忆）
+            Agent 实例
         """
-        if session_id not in self._agents:
+        if role not in self._agents:
             llm = get_llm(llm_provider)
-            self._agents[session_id] = create_agent(
+            self._agents[role] = create_agent(
                 model=llm,
-                system_prompt=LYRICS_FORMATTING_PROMPT,
+                middleware=get_all_middleware(),
+                context_schema=AgentContext,
             )
             console_logger.info(
-                f"创建新 Agent 实例，session_id: {session_id}, "
-                f"agent_id: {id(self._agents[session_id])}, "
+                f"创建新 Agent 实例，role: {role}, "
+                f"agent_id: {id(self._agents[role])}, "
                 f"当前实例总数: {len(self._agents)}"
             )
         else:
             console_logger.info(
-                f"复用已有 Agent 实例，session_id: {session_id}, "
-                f"agent_id: {id(self._agents[session_id])}, "
+                f"复用已有 Agent 实例，role: {role}, "
+                f"agent_id: {id(self._agents[role])}, "
                 f"当前实例总数: {len(self._agents)}"
             )
-        return self._agents[session_id]
+        return self._agents[role]
 
-    def clear_session(self, session_id: str) -> None:
-        """清理指定会话的 agent 实例.
+    def clear_role(self, role: str) -> None:
+        """清理指定角色的 agent 实例.
 
         Args:
-            session_id: 要清理的会话 ID
+            role: 要清理的角色标识
         """
-        if session_id in self._agents:
-            del self._agents[session_id]
-            console_logger.info(f"已清理会话 agent: {session_id}")
+        if role in self._agents:
+            del self._agents[role]
+            console_logger.info(f"已清理角色 agent: {role}")
 
     def clear_all(self) -> None:
         """清理所有 agent 实例."""
         self._agents.clear()
-        console_logger.info("已清理所有会话 agent")
+        console_logger.info("已清理所有角色 agent")
 
     @property
-    def active_sessions(self) -> list[str]:
-        """获取当前活跃的会话 ID 列表."""
+    def active_roles(self) -> list[str]:
+        """获取当前活跃的角色列表."""
         return list(self._agents.keys())
