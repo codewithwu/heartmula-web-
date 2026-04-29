@@ -1,5 +1,6 @@
 """应用配置模块."""
 
+from pathlib import Path
 from typing import Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -14,6 +15,11 @@ class Settings(BaseSettings):
         case_sensitive=False,
         extra="ignore",
     )
+
+    # 应用配置
+    app_name: str = "heartmula"
+    app_root: Path = Path(__file__).parent.parent
+    log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
 
     # LLM 配置
     longcat_api_key: str = ""
