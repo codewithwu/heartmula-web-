@@ -109,7 +109,8 @@ function updateSummary() {
 // 更新生成按钮状态
 function updateGenerateButton() {
     const hasLyrics = lyricsInput.value.trim().length > 0;
-    generateBtn.disabled = !hasLyrics;
+    const hasTags = Object.keys(selectedTags).length > 0;
+    generateBtn.disabled = !hasLyrics || !hasTags;
 }
 
 // 处理生成
