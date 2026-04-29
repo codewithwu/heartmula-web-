@@ -1,13 +1,10 @@
-"""Music Agent 模块.
-"""
+"""Music Agent 模块."""
 
 from typing import Annotated, Any
 
 from langchain.agents import create_agent
 
-from src.agents.context import AgentContext
 from src.agents.llm_factory import get_llm
-from src.agents.middleware import get_all_middleware
 from src.utils import console_logger
 
 
@@ -28,6 +25,9 @@ class AgentManager:
 
     def get_agent(
         self,
+        middleware=None,
+        context_schema=None,
+        response_format=None,
         role: Annotated[str, "角色标识"] = "default",
         llm_provider: Annotated[str, "LLM 提供者: 'longcat' 或 'ling'"] = "longcat",
     ) -> Any:
@@ -44,8 +44,9 @@ class AgentManager:
             llm = get_llm(llm_provider)
             self._agents[role] = create_agent(
                 model=llm,
-                middleware=get_all_middleware(),
-                context_schema=AgentContext,
+                middleware=middleware,
+                context_schema=context_schema,
+                response_format=response_format,
             )
             console_logger.info(
                 f"创建新 Agent 实例，role: {role}, "

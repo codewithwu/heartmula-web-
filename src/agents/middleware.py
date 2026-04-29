@@ -6,6 +6,12 @@ from langchain.agents.middleware import (
     wrap_model_call,
 )
 
+from src.agents.prompts import (
+    LYRICS_FORMATTING_PROMPT,
+    LYRICS_FORMAT_CHECK_PROMPT,
+    DEFAULT_SYSTEM_PROMPT,
+)
+
 from src.utils.logger import console_logger as logger
 
 
@@ -22,12 +28,6 @@ def dynamic_system_prompt(request: ModelRequest, handler) -> ModelResponse:
     - generate: 使用歌词格式校验提示词
     - default: 使用默认提示词
     """
-    from src.agents.prompts import (
-        LYRICS_FORMATTING_PROMPT,
-        LYRICS_FORMAT_CHECK_PROMPT,
-        DEFAULT_SYSTEM_PROMPT,
-        LyricsCheckResponse,
-    )
 
     api_role = request.runtime.context.get("api_role", "default")
     if api_role == "transcribe":
@@ -38,7 +38,6 @@ def dynamic_system_prompt(request: ModelRequest, handler) -> ModelResponse:
         return handler(
             request.override(
                 system_prompt=LYRICS_FORMAT_CHECK_PROMPT,
-                response_format=LyricsCheckResponse,
             )
         )
     elif api_role == "default":

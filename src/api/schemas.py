@@ -59,3 +59,17 @@ class GenerationResponse(BaseModel):
     """音乐生成响应模型"""
 
     audio_path: str
+
+
+class LyricsCheckRequest(BaseModel):
+    """歌词格式校验请求模型"""
+
+    lyrics: str
+    role: str = "generate"
+    llm_provider: str = "longcat"
+
+
+class LyricsCheckResponse(BaseModel):
+    """歌词格式校验响应模型"""
+
+    is_valid: bool
