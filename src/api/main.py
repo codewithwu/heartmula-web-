@@ -1,10 +1,22 @@
 import os
 
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 from src.api.routers import generate, tags, transcribe
 
 app = FastAPI(title="HeartMula 歌词转录 API", version="1.0.0")
+
+# 挂载静态文件目录
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
+@app.get("/")
+async def root() -> FileResponse:
+    """返回首页"""
+    return FileResponse("static/index.html")
+
 
 app.include_router(transcribe.router)
 app.include_router(generate.router)
