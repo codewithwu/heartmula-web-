@@ -1,0 +1,13 @@
+Genres: pop, rock, jazz, classical, electronic, blues, country, metal, funk, reggae, hip-hop, rap, indie, folk, soul, r&b, latin, dance, disco, techno, house, ambient
+
+Instruments: piano, guitar, bass, drum, violin, saxophone, trumpet, flute, organ, synthesizer, acoustic, electric, keyboard, cello, harp, banjo, harmonica, ukulele, accordion, clarinet
+
+Mood/Emotion: happy, sad, romantic, energetic, calm, peaceful, melancholic, upbeat, chill, dark, bright, dreamy, aggressive, gentle, intense, relaxing, cheerful, nostalgic, dramatic, playful
+
+Tempo/Rhythm: fast, slow, medium, upbeat, downtempo, steady, syncopated, groove, driving, flowing, bouncy, rhythmic
+
+Style/Atmosphere: acoustic, electronic, orchestral, minimal, ambient, atmospheric, cinematic, experimental, traditional, modern, vintage, lo-fi, hi-fi, raw, polished, live, studio
+
+Occasion/Theme: wedding, party, dance, meditation, workout, sleep, focus, celebration, romance, adventure, nature, urban, fantasy
+
+Vocal: male voice, female voice, choir, acappella, vocal harmony, rap, singing
