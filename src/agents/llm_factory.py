@@ -1,0 +1,55 @@
+"""LLM 工厂模块.
+
+提供不同 Provider 的 LLM 实例：
+- LongCat (主模型)
+- Ling (备用模型)
+"""
+
+from functools import lru_cache
+from typing import Annotated, Any
+
+from langchain_openai import ChatOpenAI
+
+from src.config import settings
+
+
+def _create_llm(provider: str) -> Any:
+    """创建 LLM 实例.
+
+    Args:
+        provider: LLM 提供者 ('longcat' 或 'ling')
+
+    Returns:
+        LLM 实例
+    """
+    if provider == "longcat":
+        return ChatOpenAI(
+            api_key=settings.longcat_api_key,
+            base_url=settings.longcat_base_url,
+            model=settings.longcat_model_name,
+            temperature=0.7,
+        )
+    elif provider == "ling":
+        return ChatOpenAI(
+            api_key=settings.ling_api_key,
+            base_url=settings.ling_base_url,
+            model=settings.ling_model_name,
+            temperature=0.7,
+        )
+    else:
+        raise ValueError(f"不支持的 LLM 提供者: {provider}")
+
+
+@lru_cache()
+def get_llm(
+    llm_provider: Annotated[str, "LLM 提供者: 'longcat' 或 'ling'"] = "longcat",
+) -> Any:
+    """获取 LLM 实例（单例）.
+
+    Args:
+        llm_provider: LLM 提供者
+
+    Returns:
+        LLM 实例
+    """
+    return _create_llm(llm_provider)
