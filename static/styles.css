@@ -330,7 +330,6 @@ body {
     z-index: 1;
 }
 
-.feature-card[data-feature="generate"] .card-icon,
 .feature-card[data-feature="tags"] .card-icon {
     color: var(--text-muted);
 }
