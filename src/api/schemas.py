@@ -7,6 +7,13 @@ class TranscribeResponse(BaseModel):
     lyrics: str
 
 
+class TranscribeRequest(BaseModel):
+    """转录请求模型"""
+
+    session_id: str = "default"
+    llm_provider: str = "longcat"
+
+
 class TagItem(BaseModel):
     """标签项模型"""
 
