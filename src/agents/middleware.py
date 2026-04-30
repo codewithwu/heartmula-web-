@@ -10,7 +10,6 @@ from src.agents.prompts import (
     LYRICS_FORMATTING_PROMPT,
     LYRICS_FORMAT_CHECK_PROMPT,
     DEFAULT_SYSTEM_PROMPT,
-    LYRICS_TAG_RECOMMEND_PROMPT,
 )
 
 from src.utils.logger import console_logger as logger
@@ -41,9 +40,6 @@ def dynamic_system_prompt(request: ModelRequest, handler) -> ModelResponse:
                 system_prompt=LYRICS_FORMAT_CHECK_PROMPT,
             )
         )
-    elif api_role == "tag_recommend":
-        logger.info(f"使用默认提示词，api_role: {api_role}")
-        return handler(request.override(system_prompt=LYRICS_TAG_RECOMMEND_PROMPT))
     elif api_role == "default":
         logger.info(f"使用默认提示词，api_role: {api_role}")
         return handler(request.override(system_prompt=DEFAULT_SYSTEM_PROMPT))
