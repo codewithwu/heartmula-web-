@@ -316,7 +316,7 @@ body {
 }
 
 .feature-card[data-feature="generate"] .card-glow,
-.feature-card[data-feature="tags"] .card-glow {
+.feature-card[data-feature="showcase"] .card-glow {
     background: linear-gradient(180deg, var(--magenta-glow) 0%, transparent 100%);
 }
 
@@ -330,8 +330,8 @@ body {
     z-index: 1;
 }
 
-.feature-card[data-feature="tags"] .card-icon {
-    color: var(--text-muted);
+.feature-card[data-feature="showcase"] .card-icon {
+    color: var(--magenta);
 }
 
 .feature-card[data-feature="more"] .card-icon {

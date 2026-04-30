@@ -1,0 +1,360 @@
+/* ============================================
+   HeartMula Showcase Page
+   ============================================ */
+
+/* Page Container */
+.page-container {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Page Header */
+.page-header {
+    margin-bottom: 3rem;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: var(--cyan);
+}
+
+.back-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+.page-title h1 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.page-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+/* Player Section */
+.player-section {
+    margin-bottom: 2rem;
+}
+
+.player-card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    overflow: hidden;
+}
+
+.player-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center top, var(--cyan-glow) 0%, transparent 60%);
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.album-art {
+    width: 64px;
+    height: 64px;
+    color: var(--cyan);
+    animation: spin 8s linear infinite;
+    animation-play-state: paused;
+}
+
+.album-art svg {
+    width: 100%;
+    height: 100%;
+}
+
+.player-card.playing .album-art {
+    animation-play-state: running;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.track-info {
+    flex: 1;
+}
+
+.track-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.track-artist {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+/* Player Controls */
+.player-controls {
+    position: relative;
+    z-index: 1;
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.time-current,
+.time-total {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    min-width: 36px;
+}
+
+.time-total {
+    text-align: right;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--bg-dark);
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--cyan), var(--magenta));
+    border-radius: 3px;
+    transition: width 0.1s linear;
+}
+
+.progress-thumb {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
+    background: var(--cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--cyan-glow);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.progress-bar:hover .progress-thumb {
+    opacity: 1;
+}
+
+.controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.btn-play {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cyan), var(--magenta));
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 240, 255, 0.3);
+}
+
+.btn-play:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(0, 240, 255, 0.5);
+}
+
+.btn-play svg {
+    width: 24px;
+    height: 24px;
+}
+
+.icon-pause {
+    display: none;
+}
+
+.player-card.playing .icon-play {
+    display: none;
+}
+
+.player-card.playing .icon-pause {
+    display: block;
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.icon-volume {
+    width: 20px;
+    height: 20px;
+    color: var(--text-secondary);
+}
+
+.volume-slider {
+    width: 80px;
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--bg-dark);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--cyan);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: var(--cyan);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+/* Lyrics Section */
+.lyrics-section {
+    animation: fadeIn 0.5s ease 0.2s both;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.lyrics-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.lyrics-header svg {
+    width: 24px;
+    height: 24px;
+    color: var(--cyan);
+}
+
+.lyrics-header h2 {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.lyrics-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.lyrics-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.lyrics-box::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+    border-radius: 3px;
+}
+
+.lyrics-box::-webkit-scrollbar-thumb {
+    background: var(--cyan);
+    border-radius: 3px;
+}
+
+.lyrics-content {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: var(--text-primary);
+}
+
+/* 歌词段落标记样式 */
+.lyrics-content:empty::before {
+    content: '加载中...';
+    color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page-container {
+        padding: 1.5rem;
+    }
+
+    .page-title h1 {
+        font-size: 1.5rem;
+    }
+
+    .player-card {
+        padding: 1.5rem;
+    }
+
+    .player-info {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .controls-row {
+        gap: 1.5rem;
+    }
+
+    .volume-slider {
+        width: 60px;
+    }
+}

@@ -10,6 +10,8 @@ app = FastAPI(title="HeartMula 歌词转录 API", version="1.0.0")
 
 # 挂载静态文件目录
 app.mount("/static", StaticFiles(directory="static"), name="static")
+# 挂载 example 目录
+app.mount("/example", StaticFiles(directory="example"), name="example")
 
 
 @app.get("/")
