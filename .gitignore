@@ -197,7 +197,6 @@ ckpt/
 .DS_Store
 .vscode/
 *.wav
-*.mp3
 
 # Abstra
 #   Abstra is an AI-powered process automation framework.
