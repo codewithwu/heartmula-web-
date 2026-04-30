@@ -7,6 +7,10 @@ from langchain.agents import create_agent
 from src.agents.llm_factory import get_llm
 from src.utils import console_logger
 
+from src.agents.prompts import (
+    LYRICS_FORMAT_CHECK_PROMPT,
+)
+
 
 class AgentManager:
     """Agent 多例管理器（单例）.
@@ -47,6 +51,7 @@ class AgentManager:
                 middleware=middleware,
                 context_schema=context_schema,
                 response_format=response_format,
+                system_prompt=LYRICS_FORMAT_CHECK_PROMPT,
             )
             console_logger.info(
                 f"创建新 Agent 实例，role: {role}, "

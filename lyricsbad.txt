@@ -1,0 +1,15 @@
+for chunk in agent.stream(
+    {"messages": [{"role": "user", "content": """帮我完成以下任务：
+    1. 创建一个 Python 项目目录结构（src/, tests/, docs/）                                                                 
+    2. 在 src/ 下创建 __init__.py                                                                                          
+    3. 在 src/ 下创建 main.py，写入基础代码                                                                                
+    4. 在 tests/ 下创建 test_main.py                                                                                       
+    5. 运行测试验证代码正确性                                                                                              
+    """}]},                                                                                                                
+    config={"configurable": {"thread_id": "3"}},                                                                           
+    stream_mode="values",                                                                                                 
+):              
+    if "todo_list" in chunk:                                                                                               
+        print("TODO:", chunk["todo_list"])                                                                            
+    print(chunk)                                                                                                       
+    print("---") 
