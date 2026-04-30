@@ -124,8 +124,32 @@ async function handleGenerate() {
     showProgress();
 
     try {
-        // 第一步：验证标签
-        updateProgress(10, '验证标签选择...');
+        // 第一步：校验歌词格式
+        updateProgress(5, '校验歌词格式...');
+        await delay(300);
+
+        const checkResponse = await fetch('/api/v1/lyrics/check', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                lyrics,
+                role: 'lyrics_formatter',
+                llm_provider: 'longcat',
+            }),
+        });
+
+        if (!checkResponse.ok) {
+            const errorData = await checkResponse.json().catch(() => ({}));
+            throw new Error(errorData.detail || '歌词校验失败');
+        }
+
+        const checkData = await checkResponse.json();
+        if (!checkData.is_valid) {
+            throw new Error('歌词格式校验失败，请确保歌词包含正确的段落标记');
+        }
+
+        // 第二步：验证标签
+        updateProgress(15, '验证标签选择...');
         await delay(300);
 
         const selectResponse = await fetch('/api/v1/tags/select', {
@@ -142,7 +166,7 @@ async function handleGenerate() {
         const selectData = await selectResponse.json();
         const tagsString = selectData.tags;
 
-        // 第二步：生成音乐
+        // 第三步：生成音乐
         updateProgress(30, '正在生成音乐...');
         await simulateProgress(30, 80, 1500);
 
